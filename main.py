@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/publictransport/v1/departures/all', methods=['GET'])
 def api_all():
     # Check if an ID was provided as part of the URL.
-    if 'station' not in request.args or 'station' == '':
+    if 'station' not in request.args or request.args['station'] == '':
         status_code = 400
         json_body = jsonify({"error": "No departure station provided in request. Please specify a station."})
         return json_body, status_code
@@ -17,7 +17,7 @@ def api_all():
         station = str(request.args['station'])
 
     # Check auth provided
-    if 'Authorization' not in request.headers:
+    if 'Authorization' not in request.headers or request.headers['Authorization'] == '':
         status_code = 401
         json_body = jsonify({})
         return json_body, status_code
