@@ -4,41 +4,8 @@ from huxley_requests import load_departures, huxley_departure_formatter
 # Create the application instance
 app = Flask(__name__)
 
-# Create some test data for our catalog in the form of a list of dictionaries.
-departures = {
-    "station_name": "Hitchin",
-    "departures": {
-        "all": [
-            {
-                "mode": "train",
-                "service": "22729000",
-                "train_uid": "C09716",
-                "platform": "2",
-                "aimed_departure_time": "11:13",
-                "aimed_arrival_time": "11:12",
-                "origin_name": "Brighton",
-                "destination_name": "Royston",
-                "status": "LATE",
-                "expected_arrival_time": "11:13",
-                "expected_departure_time": "11:14",
-                "calingPoints": [
-                    {
-                        "station_code": "BTN",
-                        "station_name": "Brighton",
-                        "platform": "5",
-                        "aimed_departure_time": "09:20",
-                        "aimed_arrival_time": None,
-                        "expected_departure_time": "09:21",
-                        "status": "LATE"
-                    },
-                ]
-            }
-        ]
-    }
-}
 
-
-# A route to return all of the available entries in our catalog.
+# Get departures for a station
 @app.route('/publictransport/v1/departures/all', methods=['GET'])
 def api_all():
     # Check if an ID was provided as part of the URL.
