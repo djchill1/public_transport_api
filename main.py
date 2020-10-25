@@ -64,7 +64,8 @@ def api_all():
     # if request fails, return:
     if huxley_status_code != 200:
         status_code = 503
-        json_body = jsonify({"error": "Huxley api failure"})
+        json_body = jsonify({"error": "Huxley api failure",
+                             "huxley_status_code": huxley_status_code})
         return json_body, status_code
 
     # render things right

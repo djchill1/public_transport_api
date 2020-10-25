@@ -37,38 +37,39 @@ def huxley_departure_formatter(huxleyData):
         origin = trainJson["origin"][0]["locationName"]
         destination = trainJson["destination"][0]["locationName"]
         standard_departure_time = trainJson['std']
-        standard_arrival_time = trainJson['sta']
-        expected_arrival_time = trainJson['eta']
+        # standard_arrival_time = trainJson['sta']
+        # expected_arrival_time = trainJson['eta']
         expected_departure_time = trainJson['etd']
         platform = trainJson['platform']
         status = calculate_status(expected_departure_time, trainJson['isCancelled'])
 
         # Render stops
-        callingJson = trainJson["subsequentCallingPoints"][0]["callingPoint"]
-        max_calling_index = len(callingJson)
+        if trainJson["subsequentCallingPoints"] != None:
+            callingJson = trainJson["subsequentCallingPoints"][0]["callingPoint"]
+            max_calling_index = len(callingJson)
 
-        for ic in range(0, max_calling_index):
-            callingStopJson = callingJson[ic]
-            stop_location_name = callingStopJson["locationName"]
-            stop_standard_departure_time = callingStopJson['st']
-            stop_expected_arrival_time = callingStopJson['at']
-            stop_expected_departure_time = callingStopJson['et']
-            stop_status = calculate_status(expected_departure_time, callingStopJson['isCancelled'])
-            stop = {
-                "locationName": stop_location_name,
-                "standard_departure_time": stop_standard_departure_time,
-                "expected_arrival_time": stop_expected_arrival_time,
-                "expected_departure_time": stop_expected_departure_time,
-                "status": stop_status
-            }
-            stops.append(stop)
+            for ic in range(0, max_calling_index):
+                callingStopJson = callingJson[ic]
+                stop_location_name = callingStopJson["locationName"]
+                stop_standard_departure_time = callingStopJson['st']
+                # stop_expected_arrival_time = callingStopJson['at']
+                stop_expected_departure_time = callingStopJson['et']
+                stop_status = calculate_status(expected_departure_time, callingStopJson['isCancelled'])
+                stop = {
+                    "locationName": stop_location_name,
+                    "standard_departure_time": stop_standard_departure_time,
+                    # "expected_arrival_time": stop_expected_arrival_time,
+                    "expected_departure_time": stop_expected_departure_time,
+                    "status": stop_status
+                }
+                stops.append(stop)
 
         departure = {
             "origin": origin,
             "destination": destination,
             "standard_departure_time": standard_departure_time,
-            "standard_arrival_time": standard_arrival_time,
-            "expected_arrival_time": expected_arrival_time,
+            # "standard_arrival_time": standard_arrival_time,
+            # "expected_arrival_time": expected_arrival_time,
             "expected_departure_time": expected_departure_time,
             "platform": platform,
             "status": status,
