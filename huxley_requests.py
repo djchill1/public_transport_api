@@ -17,7 +17,7 @@ def load_departures(departureStation, apiKey):
 def calculate_status(expected_departure_time, isCancelled):
     if expected_departure_time == "On time":
         return "On time"
-    elif isCancelled == True:
+    elif isCancelled or expected_departure_time == "Cancelled":
         return "Cancelled"
     elif expected_departure_time == "Delayed":
         return "Delayed"
@@ -54,7 +54,7 @@ def huxley_departure_formatter(huxleyData):
                 stop_standard_departure_time = callingStopJson['st']
                 # stop_expected_arrival_time = callingStopJson['at']
                 stop_expected_departure_time = callingStopJson['et']
-                stop_status = calculate_status(expected_departure_time, callingStopJson['isCancelled'])
+                stop_status = calculate_status(stop_expected_departure_time, callingStopJson['isCancelled'])
                 stop = {
                     "locationName": stop_location_name,
                     "standard_departure_time": stop_standard_departure_time,

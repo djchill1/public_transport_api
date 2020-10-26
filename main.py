@@ -26,7 +26,7 @@ def api_all():
 
     r, huxley_status_code = load_departures(station, accessToken)
 
-    print(r)
+    # print(r)
 
     # if request fails, return:
     if huxley_status_code != 200:
